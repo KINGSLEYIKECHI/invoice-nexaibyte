@@ -1,0 +1,25 @@
+import { test,expect } from '@playwright/test'
+test('compiled frontend and real production API work under /backend',async({page,request,baseURL})=>{
+ const email=`ci-${Date.now()}@example.test`
+ await page.goto('/register')
+ await page.getByLabel('Business name').fill('CI Production Mirror')
+ await page.getByLabel('Your name',{exact:true}).fill('CI Owner')
+ await page.getByLabel('Email address').fill(email)
+ await page.getByLabel('Password',{exact:true}).fill('ci-test-password-123')
+ await page.getByLabel('Confirm password').fill('ci-test-password-123')
+ await page.getByRole('button',{name:'Create workspace'}).click()
+ await expect(page.getByRole('link',{name:'Overview',exact:true})).toBeVisible()
+ await expect(page.getByRole('link',{name:'Platform branding'})).toHaveCount(0)
+ const token=await page.evaluate(()=>localStorage.getItem('invoice_token'))
+ const headers={Authorization:`Bearer ${token}`}
+ expect((await request.put('/backend/api/platform/settings',{headers,data:{product_name:'Attacker'}})).status()).toBe(403)
+ const clientRes=await request.post('/backend/api/clients',{headers,data:{name:'Test Client',email:'client@example.test',phone:'+2348031234567'}})
+ expect(clientRes.status()).toBe(201);const client=await clientRes.json()
+ const invoiceRes=await request.post('/backend/api/invoices',{headers,data:{client_id:client.id,issue_date:'2026-10-02',due_date:'2026-10-16',tax_percent:7.5,discount_kobo:0,items:[{description:'CI service',quantity:1,unit_price_kobo:100000}]}})
+ expect(invoiceRes.status()).toBe(201);const invoice=await invoiceRes.json();expect(invoice.total_kobo).toBe(107500)
+ const pdf=await request.get(`/backend/api/invoices/${invoice.id}/pdf`,{headers});expect(pdf.status()).toBe(200);expect((await pdf.body()).subarray(0,5).toString()).toBe('%PDF-')
+ await page.goto('/invoices');await page.reload();await expect(page.getByText(invoice.number,{exact:true})).toBeVisible()
+ for(const path of ['/backend/.env','/backend/composer.json','/backend/vendor/autoload.php'])expect((await request.get(path)).status()).toBe(404)
+ expect((await request.get('/backend/up')).status()).toBe(200)
+ expect((await request.get('/release.json')).status()).toBe(200)
+})

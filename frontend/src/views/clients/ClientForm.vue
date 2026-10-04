@@ -1,0 +1,11 @@
+<script setup lang="ts">
+import { reactive,ref,onMounted } from 'vue'
+import { useRoute,useRouter } from 'vue-router'
+import { ArrowLeft,Check } from 'lucide-vue-next'
+import { api,json } from '../../api/client'
+import type { Client } from '../../types'
+const route=useRoute(),router=useRouter(),id=route.params.id,form=reactive({name:'',company:'',email:'',phone:'',address:'',notes:''}),error=ref(''),busy=ref(false),loading=ref(!!id)
+onMounted(async()=>{if(id){try{Object.assign(form,await api<Client>('/clients/'+id))}catch(e){error.value=(e as Error).message}finally{loading.value=false}}})
+async function save(){busy.value=true;try{await api('/clients'+(id?'/'+id:''),json(id?'PUT':'POST',form));router.push('/clients')}catch(e){error.value=(e as Error).message}finally{busy.value=false}}
+</script>
+<template><RouterLink to="/clients" class="back-link"><ArrowLeft :size="16"/>Back to clients</RouterLink><div class="page-heading"><div><span class="eyebrow">YOUR ADDRESS BOOK</span><h1>{{ id?'Edit client':'A new connection' }}<span class="heading-dot">.</span></h1><p class="muted">Keep the details you need, all in one place.</p></div></div><form class="panel form-panel" @submit.prevent="save"><p v-if="loading" class="loading">Loading client…</p><template v-else><h2>Client details</h2><div class="form-grid"><label>Full name<input v-model="form.name" required maxlength="150" placeholder="Client’s full name"></label><label>Company<input v-model="form.company" maxlength="150" placeholder="Business name (optional)"></label><label>Email address<input v-model="form.email" type="email" placeholder="client@example.com"></label><label>Phone number<input v-model="form.phone" placeholder="08012345678 or +234…"><small>Nigerian numbers are automatically formatted.</small></label></div><label>Address<textarea v-model="form.address" rows="2"/></label><label>Notes<textarea v-model="form.notes" rows="3" placeholder="Anything helpful to remember"/></label></template><p v-if="error" class="error">{{ error }}</p><div class="form-actions"><RouterLink to="/clients" class="button secondary">Cancel</RouterLink><button class="button primary" :disabled="busy||loading"><Check :size="17"/>{{ busy?'Saving…':'Save client' }}</button></div></form></template>

@@ -1,0 +1,1 @@
+<?php namespace App\Jobs; class SendOverdueReminder extends SendInvoiceMessage {}

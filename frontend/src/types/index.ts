@@ -1,0 +1,11 @@
+export type Role='owner'|'admin'|'staff'
+export type Status='draft'|'sent'|'partially_paid'|'paid'|'overdue'|'void'
+export interface Business { id:number;name:string;email:string;phone:string;address:string;brand_color:string;currency:string;default_tax_percent:number;invoice_prefix:string;payment_instructions:string;logo_url?:string }
+export interface User { is_platform_admin:boolean; id:number;name:string;email:string;role:Role;business:Business }
+export interface Client { id:number;name:string;email:string;phone:string;company:string;address:string;notes:string }
+export interface Item { id?:number;description:string;quantity:number;unit_price_kobo:number;line_total_kobo?:number }
+export interface Payment { id:number;amount_kobo:number;method:string;reference?:string;paid_on:string }
+export interface Message { id:number;channel:string;status:string;recipient:string;attempts:number;error?:string;provider_message_id?:string;created_at:string }
+export interface Invoice { id:number;number:string;status:Status;client_id:number;client:Client;business?:Business;issue_date:string;due_date:string;subtotal_kobo:number;discount_kobo:number;tax_percent:number;tax_kobo:number;total_kobo:number;amount_paid_kobo:number;balance_kobo:number;notes:string;terms:string;items:Item[];payments:Payment[];messages:Message[];public_url:string }
+export interface Page<T> { data:T[];current_page:number;last_page:number;total:number }
+export interface Dashboard { billed_kobo:number;paid_kobo:number;outstanding_kobo:number;overdue_kobo:number;clients_count:number;invoices_count:number;recent_invoices:Invoice[];recent_payments:Payment[];status_counts:Record<string,number> }

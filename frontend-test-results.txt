@@ -1,0 +1,13 @@
+
+> invoice-saas-frontend@1.0.0 test
+> vitest run
+
+
+ RUN  v4.1.11 C:/laragon/www/invoice-generator/apps/invoice-saas/frontend
+
+
+ Test Files  3 passed (3)
+      Tests  6 passed (6)
+   Start at  01:36:06
+   Duration  57.57s (transform 6.29s, setup 0ms, import 11.85s, tests 1.32s, environment 149.24s)
+

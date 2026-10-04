@@ -1,0 +1,67 @@
+
+   PASS  Tests\Unit\ExampleTest
+  ✓ that true is true                                                                                            0.81s  
+
+   PASS  Tests\Unit\InvoiceTotalsTest
+  ✓ it rounds each fractional line and tax in integer kobo                                                       2.34s  
+  ✓ it handles exact half rounding and zero totals
+
+   PASS  Tests\Feature\AuthTest
+  ✓ it registers a business and owner and issues a token                                                        30.35s  
+  ✓ it logs in, rejects incorrect credentials and revokes logout tokens                                          7.99s  
+  ✓ it requires authentication for tenant routes                                                                 1.27s  
+
+   PASS  Tests\Feature\ClientTest
+  ✓ it creates edits searches and soft deletes clients and normalizes Nigerian phones                            1.03s  
+  ✓ it rejects invalid phones                                                                                    0.62s  
+
+   PASS  Tests\Feature\ConcurrentInvoiceTest
+  ✓ it creates unique sequential invoices from four concurrent processes                                        83.28s  
+
+   PASS  Tests\Feature\ExampleTest
+  ✓ the application returns a successful response                                                                3.95s  
+
+   PASS  Tests\Feature\InvoiceNumberTest
+  ✓ it allocates sequential independent numbers and rolls back abandoned transactions                            2.61s  
+
+   PASS  Tests\Feature\InvoiceTest
+  ✓ it computes totals ignores supplied totals and generates a new number                                        1.93s  
+  ✓ it only edits drafts and duplicates into a clean draft                                                       0.59s  
+  ✓ it voids only unpaid invoices and disallows further edits                                                    0.78s  
+  ✓ it rejects discounts above subtotal and nested field injection                                               1.92s  
+
+   PASS  Tests\Feature\OverdueCommandTest
+  ✓ it marks unpaid past due invoices and schedules each reminder once across tenants                            2.29s  
+
+   PASS  Tests\Feature\PaymentTest
+  ✓ it records partial and full payments rejects overpayment and recalculates on removal                         4.86s  
+  ✓ it rejects payments against drafts voids and future dates                                                    0.74s  
+
+   PASS  Tests\Feature\PdfTest
+  ✓ it returns a valid nonempty PDF containing the invoice number in its title                                  34.43s  
+
+   PASS  Tests\Feature\PublicLinkTest
+  ✓ it shows only the requested invoice without auth and provides a signed pdf                                   6.32s  
+
+   PASS  Tests\Feature\RoleAccessTest
+  ✓ it denies staff settings team void and deletion                                                              2.02s  
+  ✓ it prevents an admin from removing or demoting an owner                                                      0.63s  
+  ✓ it revokes a removed members tokens and preserves audit records                                              0.56s  
+
+   PASS  Tests\Feature\SendInvoiceTest
+  ✓ it queues one job per channel with queued delivery logs                                                      0.36s  
+  ✓ it sends mail with a PDF and marks the draft sent on success                                                 2.18s  
+  ✓ it supports log-only WhatsApp and the Cloud document API                                                     6.89s  
+  ✓ it tracks attempts retries and final delivery failure                                                        1.24s  
+  ✓ it atomically rejects sending when one selected contact is missing                                           1.01s  
+
+   PASS  Tests\Feature\TenantIsolationTest
+  ✓ it returns 404 for another tenants client reads writes and deletes                                           0.49s  
+  ✓ it isolates invoice reads writes delivery pdf duplicate void and payments                                    0.70s  
+  ✓ it never lists another tenants rows or accepts their foreign keys                                            0.49s  
+  ✓ it fails closed without a tenant context                                                                     0.68s  
+
+  Tests:    32 passed (151 assertions)
+  Duration: 220.65s
+
+Additional BusinessSettingsTest run: 2 passed (12 assertions), covering settings, logo validation, owner-only business deletion and tenant preservation.

@@ -1,0 +1,7 @@
+vendor
+node_modules
+.env
+database/*.sqlite*
+storage/logs/*
+storage/framework/views/*
+public/storage

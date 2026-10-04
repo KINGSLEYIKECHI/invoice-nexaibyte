@@ -1,0 +1,2 @@
+export function formatNaira(kobo:number=0):string { return new Intl.NumberFormat('en-NG',{style:'currency',currency:'NGN',minimumFractionDigits:2}).format(kobo/100) }
+export function toKobo(naira:number):number { return Math.round(naira*100) }

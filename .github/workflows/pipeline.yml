@@ -1,0 +1,172 @@
+name: Test, package and deploy
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy the tested release to Hostinger
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: invoice-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ci-only-password
+          MYSQL_DATABASE: invoice_ci
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -pci-only-password"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_DATABASE: invoice_ci
+      DB_USERNAME: root
+      DB_PASSWORD: ci-only-password
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: {persist-credentials: false}
+      - uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
+        with:
+          php-version: '8.3'
+          extensions: bcmath, dom, fileinfo, gd, mbstring, pdo_mysql, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Check deployment scripts
+        run: |
+          for script in ops/*.sh;do bash -n "$script";done
+          bash ops/test-deployment.sh
+      - name: Install locked dependencies and test MySQL backend
+        working-directory: backend
+        run: |
+          mkdir -p bootstrap/cache storage/framework/{cache/data,sessions,views} storage/logs storage/app/public
+          cp .env.production.example .env
+          composer validate --no-check-publish
+          composer install --prefer-dist --no-interaction --no-scripts
+          php artisan package:discover --no-ansi
+          php artisan key:generate --no-ansi
+          composer audit
+          EXPECT_MYSQL=1 php vendor/bin/pest --configuration phpunit.mysql.xml --colors=never
+      - name: Test and compile frontend
+        working-directory: frontend
+        env: {VITE_API_URL: /backend/api}
+        run: |
+          npm ci
+          npm audit --audit-level=high
+          npm test
+          npm run build
+          npx playwright install --with-deps chromium
+      - name: Create immutable production package
+        run: |
+          composer install --working-dir=backend --no-dev --prefer-dist --no-interaction --no-scripts --optimize-autoloader
+          python3 scripts/build-release.py --version "${GITHUB_SHA}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          python3 scripts/check-release.py artifacts/*.tar.gz
+      - name: Boot production package on Apache with restricted PHP
+        env:
+          APP_ENV: production
+          APP_DEBUG: 'false'
+          APP_URL: http://127.0.0.1:8080/backend
+          ASSET_URL: http://127.0.0.1:8080/backend
+          FRONTEND_URL: http://127.0.0.1:8080
+          CACHE_STORE: file
+          QUEUE_CONNECTION: database
+          SESSION_DRIVER: file
+          MAIL_MAILER: log
+        run: |
+          mkdir -p .release-test
+          tar -xzf artifacts/*.tar.gz -C .release-test
+          cp backend/.env .release-test/backend/.env
+          python3 - <<'PY'
+          import os,re
+          from pathlib import Path
+          p=Path('.release-test/backend/.env');s=p.read_text()
+          for k in ['APP_ENV','APP_DEBUG','APP_URL','ASSET_URL','FRONTEND_URL','DB_CONNECTION','DB_HOST','DB_PORT','DB_DATABASE','DB_USERNAME','DB_PASSWORD','CACHE_STORE','QUEUE_CONNECTION','SESSION_DRIVER','MAIL_MAILER']:
+              s=re.sub(r'^'+k+r'=.*$',k+'="'+os.environ[k]+'"',s,flags=re.M)
+          p.write_text(s)
+          PY
+          mkdir -p .release-test/backend/bootstrap/cache .release-test/backend/storage/framework/{cache/data,sessions,views} .release-test/backend/storage/logs .release-test/backend/storage/app/public
+          ln -s ../../backend/storage/app/public .release-test/public/backend/storage
+          chmod -R a+rwX .release-test/backend/storage .release-test/backend/bootstrap/cache
+          docker build -f ops/production-test.Dockerfile -t invoice-production-test .
+          docker run -d --name invoice-production-test --network host -v "$PWD/.release-test:/srv/release" invoice-production-test
+          for command in package:discover migrate config:cache route:cache view:cache; do
+            if [ "$command" = migrate ];then flags="--force --no-ansi";else flags="--no-ansi";fi
+            docker exec -w /srv/release/backend invoice-production-test php artisan "$command" $flags
+          done
+          # Cache files were written by root; Apache's www-data user needs writable runtime paths.
+          chmod -R a+rwX .release-test/backend/storage .release-test/backend/bootstrap/cache
+          for i in $(seq 1 30);do curl --fail --silent http://127.0.0.1:8080/backend/up && break;sleep 2;done
+          curl --fail --silent http://127.0.0.1:8080/backend/up
+      - name: Test compiled browser flows against production package
+        working-directory: frontend
+        run: npx playwright test
+      - name: Save test evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: test-evidence-${{ github.run_id }}
+          path: |
+            frontend/playwright-report
+            frontend/test-results
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Save verified release
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/*
+          retention-days: 30
+  deploy:
+    needs: verify
+    if: github.ref == 'refs/heads/main' && (inputs.deploy == true || (github.event_name == 'push' && vars.AUTO_DEPLOY == 'true'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://invoice.nexaibyte.com
+    concurrency:
+      group: hostinger-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: {persist-credentials: false}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: release-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts
+      - name: Deploy verified artifact over SSH
+        env:
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.HOSTINGER_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          [[ "$HOST" =~ ^[a-zA-Z0-9.-]+$ && "$SSH_USER" =~ ^[a-zA-Z0-9_-]+$ && "$PORT" =~ ^[0-9]+$ ]] || exit 1
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/invoice_key
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/invoice_key ~/.ssh/known_hosts
+          VERSION="${GITHUB_SHA}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          SSH=(ssh -i ~/.ssh/invoice_key -p "$PORT" -o BatchMode=yes -o StrictHostKeyChecking=yes "$SSH_USER@$HOST")
+          "${SSH[@]}" 'test -f ~/invoice-deploy/current && mkdir -p ~/invoice-deploy/incoming'
+          scp -i ~/.ssh/invoice_key -P "$PORT" -o BatchMode=yes -o StrictHostKeyChecking=yes artifacts/* ops/deploy.sh "$SSH_USER@$HOST:invoice-deploy/incoming/"
+          "${SSH[@]}" "bash ~/invoice-deploy/incoming/deploy.sh ~/invoice-deploy '$VERSION'"

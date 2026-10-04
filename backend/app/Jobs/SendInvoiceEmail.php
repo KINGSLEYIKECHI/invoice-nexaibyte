@@ -1,0 +1,1 @@
+<?php namespace App\Jobs; class SendInvoiceEmail extends SendInvoiceMessage {}

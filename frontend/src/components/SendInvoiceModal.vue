@@ -1,0 +1,10 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { X,Send } from 'lucide-vue-next'
+import { api,json } from '../api/client'
+import type { Invoice } from '../types'
+const props=defineProps<{invoice:Invoice}>(),emit=defineEmits(['close','sent'])
+const channels=ref<string[]>(props.invoice.client.email?['email']:['whatsapp']),message=ref('Hi, please find your invoice attached.'),busy=ref(false),error=ref('')
+async function send(){busy.value=true;error.value='';try{await api('/invoices/'+props.invoice.id+'/send',json('POST',{channels:channels.value,message:message.value}));emit('sent')}catch(e){error.value=(e as Error).message}finally{busy.value=false}}
+</script>
+<template><div class="modal-overlay" @click.self="emit('close')"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="send-title"><header><h2 id="send-title">Send {{ invoice.number }}</h2><button class="icon-button" @click="emit('close')" aria-label="Close"><X/></button></header><p class="muted">Your client receives a PDF and a secure invoice link.</p><form @submit.prevent="send"><div class="channel-options"><label><input type="checkbox" v-model="channels" value="email" :disabled="!invoice.client.email">Email <small>{{ invoice.client.email || 'No email on file' }}</small></label><label><input type="checkbox" v-model="channels" value="whatsapp" :disabled="!invoice.client.phone">WhatsApp <small>{{ invoice.client.phone || 'No phone on file' }}</small></label></div><label>Message<textarea v-model="message" rows="3" maxlength="2000"/></label><p class="notice">WhatsApp uses log-only mode until your business configures Meta credentials. Queued delivery appears in the delivery history.</p><p v-if="error" class="error" role="alert">{{ error }}</p><footer><button type="button" class="button secondary" @click="emit('close')">Cancel</button><button class="button primary" :disabled="busy||!channels.length"><Send :size="16"/>{{ busy?'Queuing…':'Send invoice' }}</button></footer></form></section></div></template>

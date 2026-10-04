@@ -1,0 +1,34 @@
+
+> invoice-saas-frontend@1.0.0 build
+> vue-tsc --noEmit && vite build
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 1624 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                            0.41 kB │ gzip:  0.29 kB
+dist/assets/index-kf7EuScY.css                                            19.21 kB │ gzip:  5.04 kB
+dist/assets/check-BdqKrPu8.js                                              0.13 kB │ gzip:  0.14 kB
+dist/assets/plus-CziUdpV3.js                                               0.15 kB │ gzip:  0.15 kB
+dist/assets/x-C-egFH4L.js                                                  0.16 kB │ gzip:  0.15 kB
+dist/assets/arrow-right-B8g-fI8_.js                                        0.17 kB │ gzip:  0.16 kB
+dist/assets/arrow-left-aH-b9vcn.js                                         0.17 kB │ gzip:  0.16 kB
+dist/assets/search-CuRzzVPE.js                                             0.17 kB │ gzip:  0.17 kB
+dist/assets/pencil-B0yE2TJJ.js                                             0.28 kB │ gzip:  0.23 kB
+dist/assets/StatusBadge.vue_vue_type_script_setup_true_lang-BfGfCH1J.js    0.29 kB │ gzip:  0.23 kB
+dist/assets/save-D7XdfoXe.js                                               0.33 kB │ gzip:  0.23 kB
+dist/assets/trash-2-Be-RZejH.js                                            0.36 kB │ gzip:  0.25 kB
+dist/assets/formatDate-CIS-VGJq.js                                         0.50 kB │ gzip:  0.32 kB
+dist/assets/Register-BIgwvQ8S.js                                           2.50 kB │ gzip:  1.17 kB
+dist/assets/ClientForm-DzunnKIf.js                                         3.00 kB │ gzip:  1.40 kB
+dist/assets/Login-Bkyts9kv.js                                              3.06 kB │ gzip:  1.49 kB
+dist/assets/ClientList-BIXVYwvJ.js                                         3.68 kB │ gzip:  1.77 kB
+dist/assets/InvoiceList-513lP2q1.js                                        4.66 kB │ gzip:  2.05 kB
+dist/assets/TeamList-DeVyIKSV.js                                           4.96 kB │ gzip:  2.14 kB
+dist/assets/BusinessSettings-H-kDTj4t.js                                   5.66 kB │ gzip:  2.29 kB
+dist/assets/Dashboard-BPl-3K1R.js                                          6.11 kB │ gzip:  2.62 kB
+dist/assets/InvoiceForm-7bv1bdyH.js                                        7.18 kB │ gzip:  2.88 kB
+dist/assets/InvoiceDetail-CEX_qLek.js                                     14.41 kB │ gzip:  5.09 kB
+dist/assets/index-DfLR0k3K.js                                            110.07 kB │ gzip: 42.87 kB
+✓ built in 42.22s
