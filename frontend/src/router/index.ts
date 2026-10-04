@@ -1,6 +1,9 @@
 import { createRouter,createWebHistory } from 'vue-router'
 import { useAuth } from '../stores/auth'
 const router=createRouter({history:createWebHistory(),routes:[
+ {path:'/about',component:()=>import('../views/About.vue'),meta:{public:true}},
+ {path:'/privacy',component:()=>import('../views/Privacy.vue'),meta:{public:true}},
+ {path:'/admin',component:()=>import('../views/settings/PlatformAdmin.vue'),meta:{platformAdmin:true}},
  {path:'/login',component:()=>import('../views/auth/Login.vue'),meta:{guest:true}},
  {path:'/register',component:()=>import('../views/auth/Register.vue'),meta:{guest:true}},
  {path:'/',component:()=>import('../views/Dashboard.vue')},
@@ -16,5 +19,5 @@ const router=createRouter({history:createWebHistory(),routes:[
  {path:'/settings',component:()=>import('../views/settings/BusinessSettings.vue'),meta:{manager:true}},
  {path:'/:pathMatch(.*)*',redirect:'/'}
 ]})
-router.beforeEach(async to=>{const auth=useAuth();if(!auth.loaded) await auth.restore();if(!to.meta.guest&&!auth.user)return '/login';if(to.meta.guest&&auth.user)return '/';if(to.meta.platformAdmin&&!auth.user?.is_platform_admin)return '/';if(to.meta.manager&&!auth.manager)return '/'})
+router.beforeEach(async to=>{if(document.documentElement.dataset.invoiceAdsActive==='true'||document.querySelector('script[data-invoice-ads]')){window.location.assign(to.fullPath);return false;}const auth=useAuth();if(!auth.loaded) await auth.restore();if(!to.meta.guest&&!to.meta.public&&!auth.user)return '/login';if(to.meta.guest&&auth.user)return '/';if(to.meta.platformAdmin&&!auth.user?.is_platform_admin)return '/';if(to.meta.manager&&!auth.manager)return '/'})
 export default router

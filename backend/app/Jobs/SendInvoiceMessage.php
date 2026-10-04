@@ -14,6 +14,7 @@ abstract class SendInvoiceMessage implements ShouldQueue {
     public function __construct(public int $logId,public int $businessId) { $this->afterCommit(); }
     public function backoff(): array { return [30,120,600]; }
     public function handle(InvoicePdfService $pdf,WhatsAppService $whatsapp): void {
+        app(\App\Services\IntegrationSettings::class)->apply();
         $log=MessageLog::withoutGlobalScopes()->where('business_id',$this->businessId)->findOrFail($this->logId);
         if($log->status==='sent') return;
         $invoice=Invoice::withoutGlobalScopes()->where('business_id',$this->businessId)->findOrFail($log->invoice_id);
@@ -28,9 +29,9 @@ abstract class SendInvoiceMessage implements ShouldQueue {
                 $log->update(['status'=>'sent','provider_message_id'=>$provider,'error'=>null]);
                 if($current->status!=='void') { $current->sent_at??=now(); $current->recalculateStatus(); }
             },5);
-        } catch(Throwable $e) { $log->update(['error'=>$e->getMessage()]); throw $e; }
+        } catch(Throwable $e) { $log->update(['error'=>'Delivery failed. Check provider settings and retry.']); throw new \RuntimeException('Invoice delivery failed. Check provider settings.'); }
     }
     public function failed(?Throwable $e): void {
-        MessageLog::withoutGlobalScopes()->where('business_id',$this->businessId)->whereKey($this->logId)->update(['status'=>'failed','error'=>$e?->getMessage() ?? 'Delivery failed.']);
+        MessageLog::withoutGlobalScopes()->where('business_id',$this->businessId)->whereKey($this->logId)->update(['status'=>'failed','error'=>'Delivery failed. Check provider settings and retry.']);
     }
 }

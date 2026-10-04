@@ -2,6 +2,7 @@ Options -Indexes
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
+RewriteRule ^ads\.txt$ /backend/ads.txt [R=302,L]
 RewriteRule ^backend(?:/|$) - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

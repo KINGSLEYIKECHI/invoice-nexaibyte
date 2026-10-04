@@ -208,3 +208,11 @@ Publish this project folder as the repository root. Follow [the detailed CI/CD g
 ## Cloud images and favicon uploads
 
 See [media storage setup](docs/MEDIA-STORAGE.md) for Cloudinary configuration, the logo-path repair, platform logo/favicon uploads and existing-installation update instructions.
+
+## Platform integrations, users and payment emails
+
+See [the cumulative admin update guide](docs/ADMIN-UPDATE.md) for the new admin interface, encrypted credentials, connection tests, users/activity reporting, payment receipts, favicon upload and AdSense preparation. It includes installation commands for your existing Hostinger deployment and the manual acceptance checklist.
+
+## Change history
+
+Use [the changelog](CHANGELOG.md) for release summaries, [the latest detailed change record](docs/changes/2026-10-04-platform-administration.md) for the file-by-file implementation, and [the tracking process](docs/CHANGE-TRACKING.md) for future commits.

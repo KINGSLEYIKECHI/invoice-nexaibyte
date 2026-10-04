@@ -306,3 +306,7 @@ See `docs/DELIVERY-VALIDATION.md` for checks actually executed on the Windows wo
 - [Hostinger SSH access](https://www.hostinger.com/support/1583245-how-to-connect-to-a-hosting-plan-via-ssh-in-hostinger/)
 - [Hostinger rsync](https://www.hostinger.com/support/how-to-use-rsync-to-sync-files-and-directories-at-hostinger/)
 - [Hostinger transfer and symlink support](https://www.hostinger.com/support/which-file-transfer-and-server-access-options-are-supported-at-hostinger/)
+
+## Runtime integrations and activity retention
+
+Provider credentials can now be configured and tested by the platform operator at `/admin`; they persist encrypted in the shared database across releases. Installation/APP_KEY/DB/queue values stay in shared `.env`. Preserve APP_KEY. See [ADMIN-UPDATE.md](ADMIN-UPDATE.md) for cumulative installation and the optional daily `activity` cron task using the updated wrapper.

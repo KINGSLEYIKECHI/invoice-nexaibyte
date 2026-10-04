@@ -34,3 +34,7 @@ Local test databases are deliberately separate from project/customer databases a
 ## Media update â€” 2026-10-04
 
 The reported public logo URL returned HTTP 404. Added symlink-independent local logo delivery, authenticated Cloudinary image storage, platform logo/favicon uploads and bounded PDF logo retrieval. MySQL regression suite: 42 tests / 208 assertions passed. Frontend: seven tests and production TypeScript/Vite build passed. Real Cloudinary upload/delete remains unverified without account credentials. See MEDIA-STORAGE.md and the invoice-media update archives.
+
+## Platform operations update — 2026-10-04
+
+52 backend tests / 296 assertions passed against isolated MySQL 8.4.3. All 13 frontend tests, TypeScript and the production build passed. Added encrypted/masked credential handling, read-only provider checks, authenticated activity metadata, SQL daily login aggregates, user search, queued payment owner/customer emails with retry status, explicit favicon navigation and consent-gated public advertising preparation. Provider failure and workspace-deletion regression checks passed. SMTP/provider tests are mocked; hosted rollout and real deliveries remain unverified. See ADMIN-UPDATE.md for acceptance and limitations.

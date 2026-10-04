@@ -1,28 +1,9 @@
 # Platform branding editor
 
-Manage branding at https://invoice.nexaibyte.com/platform after enabling your account.
-Controls: name, public HTTPS logo URL, company attribution/link, support email, colours, login/registration/welcome text, announcement. Text is escaped; arbitrary HTML/scripts are not supported. Logos use an image URL rather than a file upload. Business invoice branding is independent. Existing visitors see saved changes after refresh. This is a branding/content panel, not a page layout builder or account moderation system.
+The platform operator can manage shared branding at `/platform`, reached through `/admin` → **Branding & favicon upload**. Controls include product/company name, support link, colours, welcome/login/registration text, announcement, product logo upload and browser favicon upload. Text is escaped and arbitrary scripts/HTML are unsupported. Business invoice branding remains separate.
 
-## Existing Hostinger installation update
-1. Back up your backend files and database through Hostinger.
-2. Extract deployment/invoice-platform-backend-update.zip into /home/u491120861/invoice-backend, replacing the included files. It contains no .env, vendor, storage or customer data.
-3. Run over SSH:
+The favicon accepts square PNG/JPG up to 1 MB and produces a 64 × 64 PNG. Storage can be local or Cloudinary; see [media storage](docs/MEDIA-STORAGE.md).
 
-```sh
-cd ~/invoice-backend
-php artisan migrate --force --no-ansi
-php artisan config:clear
-php artisan route:clear
-php artisan view:clear
-php artisan platform:admin YOUR_REGISTERED_EMAIL
-```
+Grant access only to your own existing account with `php artisan platform:admin YOUR_REGISTERED_EMAIL --no-ansi`, then sign out and in. Registration and business-owner roles never grant platform access.
 
-Replace YOUR_REGISTERED_EMAIL with the email of YOUR existing registered account. Registration never grants platform access. To revoke it: php artisan platform:admin YOUR_REGISTERED_EMAIL --revoke
-
-4. Extract deployment/invoice-platform-frontend-update.zip directly into /home/u491120861/domains/nexaibyte.com/public_html/invoice, replacing index.html, .htaccess and matching assets. Keep the backend directory. The archive uses https://invoice.nexaibyte.com/backend/api.
-5. Sign out and sign in again, then open /platform. Choose a name and colours, preview and save. Keep the page open if a save error occurs; it preserves your changes.
-
-No Composer install or frontend build is required for these two updates. No APP_KEY regeneration, database reset or seeding is needed.
-
-## Validation
-37 backend tests, 178 assertions; 6 frontend tests; TypeScript and production Vite build pass. Access tests cover guest/owner denial, explicit grant/revoke, unsafe URLs/colour input rejection and registration/team privilege injection.
+Use the latest [cumulative admin update](docs/ADMIN-UPDATE.md) and invoice-admin update archives for Hostinger installation. It includes the earlier branding/media changes. Do not install older invoice-platform archives over this update.

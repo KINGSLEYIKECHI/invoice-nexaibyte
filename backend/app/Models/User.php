@@ -9,7 +9,7 @@ class User extends Authenticatable {
     protected $attributes = ['is_platform_admin'=>false];
     protected $guarded = ['id','is_platform_admin'];
     protected $hidden = ['password','remember_token'];
-    protected function casts(): array { return ['is_platform_admin'=>'boolean','password'=>'hashed','last_login_at'=>'datetime']; }
+    protected function casts(): array { return ['is_platform_admin'=>'boolean','password'=>'hashed','last_login_at'=>'datetime','last_seen_at'=>'datetime']; }
     public function business() { return $this->belongsTo(Business::class); }
     public function isManager(): bool { return in_array($this->role,['owner','admin'],true); }
 }

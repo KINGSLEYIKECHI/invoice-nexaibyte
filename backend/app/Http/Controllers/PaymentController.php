@@ -11,8 +11,9 @@ class PaymentController extends Controller {
             abort_if(in_array($invoice->status,['draft','void','paid']),422,'Payments require an issued invoice with a balance.');
             $invoice->recalculateStatus();
             if($r->amount_kobo>$invoice->balance_kobo) throw ValidationException::withMessages(['amount_kobo'=>'Payment exceeds the outstanding balance.']);
-            $invoice->payments()->create(array_merge($r->validated(),['recorded_by'=>$r->user()->id]));
+            $payment=$invoice->payments()->create(array_merge($r->validated(),['recorded_by'=>$r->user()->id]));
             $invoice->recalculateStatus();
+            app(\App\Services\PaymentEmails::class)->queue($invoice,$payment);
             return response()->json($invoice->load(['client','items','payments','messages','business']),201);
         },5);
     }
