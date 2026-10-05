@@ -4,7 +4,15 @@ Each release records behavior, database effects, validation and deployment limit
 
 ## Unreleased
 
-No additional work recorded after the 2026-10-04 platform administration update.
+## 2026-10-05 — Commercial documents and currencies
+
+- Added tenant-isolated quotations with PDF, acceptance/decline and idempotent conversion to invoices.
+- Added quantity-only delivery notes, printable PDFs and recipient recording, including creation from issued invoices.
+- Added product catalogue, CSV/XLSX templates and atomic preview/confirm imports with explicit SKU update controls.
+- Added 165 searchable ISO currencies, saved document precision and separate dashboard currency balances; no FX conversion.
+- Added an additive migration for catalogue/document tables, invoice currency, line units and numbering counters. Existing invoice amounts remain NGN.
+- Verified 59 backend tests / 356 assertions, 16 frontend tests and production build locally. Hosted rollout and Linux CI remain unverified.
+- Guide: [Commercial documents](docs/COMMERCIAL-DOCUMENTS.md); detailed record: [2026-10-05 change record](docs/changes/2026-10-05-commercial-documents.md).
 
 ## 2026-10-04 — Platform administration update
 

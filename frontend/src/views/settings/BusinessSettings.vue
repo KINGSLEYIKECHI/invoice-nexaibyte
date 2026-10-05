@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref,onMounted } from 'vue'
+import CurrencyPicker from '../../components/CurrencyPicker.vue'
 import { Save,Upload } from 'lucide-vue-next'
 import { api,json } from '../../api/client'
 import { useRouter } from 'vue-router'

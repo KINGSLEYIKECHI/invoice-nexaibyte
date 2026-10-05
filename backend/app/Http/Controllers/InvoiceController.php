@@ -18,7 +18,7 @@ class InvoiceController extends Controller {
     public function show(Invoice $invoice) { return $invoice->load(['client','items','payments','messages','business']); }
     public function store(StoreInvoiceRequest $r,InvoiceTotalsService $totals,InvoiceNumberService $numbers) {
         return DB::transaction(function() use($r,$totals,$numbers) {
-            $data=$r->validated(); $result=$totals->calculate($data['items'],$data['discount_kobo']??0,$data['tax_percent']);
+            $data=$r->validated();$data['currency']??=$r->user()->business->currency;$data['currency_minor_units']=app(\App\Services\CurrencyService::class)->precision($data['currency']); $result=$totals->calculate($data['items'],$data['discount_kobo']??0,$data['tax_percent']);
             unset($data['items']); $items=$result['items']; unset($result['items']);
             $invoice=Invoice::create(array_merge($data,$result,['business_id'=>$r->user()->business_id,'created_by'=>$r->user()->id,'number'=>$numbers->next($r->user()->business_id),'public_token'=>(string)Str::uuid(),'status'=>'draft']));
             $invoice->items()->createMany($items);
@@ -29,7 +29,7 @@ class InvoiceController extends Controller {
         return DB::transaction(function() use($r,$invoice,$totals) {
             $invoice=Invoice::whereKey($invoice->id)->lockForUpdate()->firstOrFail();
             abort_unless($invoice->status==='draft' && !$invoice->messages()->where('status','queued')->exists(),422,'Only drafts without pending delivery can be edited.');
-            $data=$r->validated(); $result=$totals->calculate($data['items'],$data['discount_kobo']??0,$data['tax_percent']);
+            $data=$r->validated();$data['currency']??=$invoice->currency;$data['currency_minor_units']=app(\App\Services\CurrencyService::class)->precision($data['currency']); $result=$totals->calculate($data['items'],$data['discount_kobo']??0,$data['tax_percent']);
             unset($data['items']); $items=$result['items']; unset($result['items']);
             $invoice->update(array_merge($data,$result)); $invoice->items()->delete(); $invoice->items()->createMany($items);
             return $invoice->load(['client','items']);
@@ -47,7 +47,7 @@ class InvoiceController extends Controller {
         return DB::transaction(function() use($invoice,$numbers) {
             $copy=$invoice->replicate(['number','public_token','sent_at','paid_at','created_at','updated_at']);
             $copy->number=$numbers->next($invoice->business_id); $copy->public_token=(string)Str::uuid(); $copy->status='draft'; $copy->amount_paid_kobo=0; $copy->created_by=auth()->id(); $copy->issue_date=today(); $copy->due_date=today()->addDays(14); $copy->save();
-            foreach($invoice->items as $item) $copy->items()->create($item->only(['description','quantity','unit_price_kobo','line_total_kobo','position']));
+            foreach($invoice->items as $item) $copy->items()->create($item->only(['description','quantity','unit_price_kobo','line_total_kobo','position','unit']));
             return response()->json($copy->load(['client','items']),201);
         },5);
     }

@@ -16,7 +16,7 @@ class SendPaymentEmail implements ShouldQueue {
   try {DB::transaction(function(){
    $n=PaymentNotification::where('business_id',$this->businessId)->lockForUpdate()->find($this->notificationId);
    if(!$n||in_array($n->status,['sent','logged'])||!Payment::withoutGlobalScopes()->where('business_id',$this->businessId)->whereKey($n->payment_id)->exists())return;
-   $n->increment('attempts');$d=$n->details;$money=fn($k)=>'NGN '.number_format($k/100,2);
+   $n->increment('attempts');$d=$n->details;$money=fn($k)=>app(\App\Services\CurrencyService::class)->format($k,$d['currency']??'NGN',$d['currency_minor_units']??2);
    $body=($n->kind==='owner'?'A payment has been recorded for your business.':'Thank you. Your payment has been recorded.')."\n\nBusiness: {$d['business_name']}\nInvoice: {$d['invoice_number']}\nPayment: ".$money($d['amount_kobo'])."\nRemaining balance at recording: ".$money($d['balance_kobo'])."\nPayment date: {$d['paid_on']}\n\nThis confirms a payment recorded in the invoicing app.";
    Mail::raw($body,fn($m)=>$m->to($n->recipient)->subject('Payment recorded: '.$d['invoice_number']));
    $n->update(['status'=>config('mail.default')==='log'?'logged':'sent','sent_at'=>now(),'error'=>null]);

@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 class Business extends Model
 {
     protected $guarded = ['id'];
-    protected $hidden = ['next_invoice_number','logo_cloud_id','logo_cloud_url'];
+    protected $hidden = ['next_invoice_number','next_quotation_number','next_delivery_number','logo_cloud_id','logo_cloud_url'];
     protected function casts(): array { return ['default_tax_percent' => 'float']; }
     public function users() { return $this->hasMany(User::class); }
     public function getLogoUrlAttribute() { return $this->logo_cloud_url ?: ($this->logo_path ? url('media/businesses/'.$this->id.'/logo').'?v='.substr(hash('sha256',$this->logo_path),0,16) : null); }

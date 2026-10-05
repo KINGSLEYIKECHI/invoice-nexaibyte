@@ -6,7 +6,7 @@ use App\Services\{PhoneService,MediaStorage};
 class BusinessSettingsController extends Controller {
     public function show(Request $r) { return $r->user()->business; }
     public function update(Request $r) {
-        $data=$r->validate(['name'=>'required|string|max:150','email'=>'nullable|email|max:255','phone'=>'nullable|string|max:30','address'=>'nullable|string|max:2000','brand_color'=>['required','regex:/^#[a-fA-F0-9]{6}$/'],'currency'=>'required|in:NGN','default_tax_percent'=>'required|numeric|between:0,100|decimal:0,2','invoice_prefix'=>'required|alpha_dash|max:15','payment_instructions'=>'nullable|string|max:5000']);
+        $data=$r->validate(['name'=>'required|string|max:150','email'=>'nullable|email|max:255','phone'=>'nullable|string|max:30','address'=>'nullable|string|max:2000','brand_color'=>['required','regex:/^#[a-fA-F0-9]{6}$/'],'currency'=>['required',\Illuminate\Validation\Rule::in(app(\App\Services\CurrencyService::class)->codes())],'default_tax_percent'=>'required|numeric|between:0,100|decimal:0,2','invoice_prefix'=>'required|alpha_dash|max:15','payment_instructions'=>'nullable|string|max:5000']);
         $data['phone']=PhoneService::normalize($data['phone']??null); $b=$r->user()->business; $b->update($data); return $b;
     }
     public function destroy(Request $r) {
@@ -18,6 +18,7 @@ class BusinessSettingsController extends Controller {
             $users=$business->users()->get();
             foreach($users as $user) $user->tokens()->delete();
             \App\Models\Invoice::where('business_id',$business->id)->delete();
+            \App\Models\CommercialDocument::where('business_id',$business->id)->delete();
             \App\Models\Client::withTrashed()->where('business_id',$business->id)->forceDelete();
             $business->users()->delete();
             $business->delete();

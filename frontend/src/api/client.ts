@@ -17,3 +17,4 @@ export async function downloadPdf(id:number,number:string){
   if(!res.ok) throw new Error('Unable to download PDF.')
   const url=URL.createObjectURL(await res.blob());const a=document.createElement('a');a.href=url;a.download=number+'.pdf';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)
 }
+export async function downloadFile(path:string,filename:string){const res=await fetch(API_URL+path,{headers:{Authorization:'Bearer '+localStorage.getItem('invoice_token')}});if(!res.ok){const data=await res.json().catch(()=>({message:'Download failed.'}));throw new Error(data.message)}const url=URL.createObjectURL(await res.blob());const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}

@@ -216,3 +216,7 @@ See [the cumulative admin update guide](docs/ADMIN-UPDATE.md) for the new admin 
 ## Change history
 
 Use [the changelog](CHANGELOG.md) for release summaries, [the latest detailed change record](docs/changes/2026-10-04-platform-administration.md) for the file-by-file implementation, and [the tracking process](docs/CHANGE-TRACKING.md) for future commits.
+
+## Commercial documents update
+
+See [quotations, delivery notes, products, imports and currencies](docs/COMMERCIAL-DOCUMENTS.md) for usage, API amount compatibility, database changes and the isolated Hostinger upgrade.
