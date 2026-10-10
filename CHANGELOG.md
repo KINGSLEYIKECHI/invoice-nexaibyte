@@ -2,6 +2,10 @@
 
 Each release records behavior, database effects, validation and deployment limitations. Detailed records live in `docs/changes/`. A Git commit records the exact source change; generated ZIPs are excluded from Git and can be reproduced using the documented packagers.
 
+## 2026-10-10 — Converted invoice payment details
+
+Converted invoices return business payment details immediately; invoice screen now displays invoice-enabled bank accounts and instructions, matching PDF visibility. No additional schema change. Current cumulative installation guide remains NUMBERING-PO-UPDATE.md. Targeted conversion regression, 19 frontend tests and production build verified locally.
+
 ## 2026-10-10 — Numbering, PO and totals
 
 Added continuation counters with prefix/separator/padding for invoices and quotations; backward counters rejected and existing numbers skipped. Added optional PO references and quotation conversion carry-through, optional bank fields, line-table subtotals and real-time quotation totals. Additive migration preserves old documents. See [current installation guide](docs/NUMBERING-PO-UPDATE.md). 61 backend tests/377 assertions and 18 frontend tests plus production build passed locally; not deployed.

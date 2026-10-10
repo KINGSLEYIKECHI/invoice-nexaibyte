@@ -14,6 +14,12 @@ Bank account text fields are optional, and entirely empty accounts are omitted f
 
 Line tables show their subtotal below the Amount column; quantity-only delivery notes show combined quantity (useful only if units are comparable). Quotations now show subtotal, discount, tax and final Total below the editor. Invoice and quotation summaries recalculate on input without saving. Tax applies after discount; amounts round to document minor units per line and for tax. Backend recalculation remains authoritative; invalid inputs/discount above subtotal cannot be saved. Currency selection is independent of phone calling codes.
 
+## Converted-invoice payment details follow-up
+
+After quotation conversion, the invoice API returns its business payment configuration and the on-screen invoice displays invoice-enabled bank accounts plus free-text payment instructions. PDFs already include the same invoice-enabled details. Quotation-only accounts stay hidden; enable Show on invoices in business settings for receiving accounts that should appear after conversion. These remain current business settings rather than quotation snapshots. No additional migration is introduced by this follow-up; the cumulative package still requires the migrations above if pending.
+
+Follow-up validation: 19 frontend tests and production build passed; targeted backend settings/conversion regression passed. No hosted deployment or push performed.
+
 ## Hostinger installation
 
 For the existing installation, back up the invoice database u491120861_invoice, private backend, frontend, .env and uploaded storage. Preserve APP_KEY. Pause only invoice cron entries and wait for its running worker to finish. Verify this exact private backend and database before proceeding. Do not run these commands against another application's Artisan path.
