@@ -42,3 +42,7 @@ The reported public logo URL returned HTTP 404. Added symlink-independent local 
 ## Commercial documents — 2026-10-05
 
 59 MySQL tests / 356 assertions, 16 frontend tests, TypeScript and production build passed. Covers document lifecycle/PDF, tenant isolation, currency preservation, idempotent conversion and CSV/XLSX atomic imports/formula rejection. CI enables zip; Hostinger rollout and Linux CI remain unverified. See COMMERCIAL-DOCUMENTS.md.
+
+## Settings and sign-out — 2026-10-10
+
+60 backend tests / 364 assertions, 17 frontend tests, TypeScript and production build passed. Headless Edge isolated sidebar CSS checks confirmed visible logout at 1366x600, 1024x768 and 800x600. Bank visibility, leading zeros, global currency and independent international phone persistence covered. Hosted deployment remains unverified.

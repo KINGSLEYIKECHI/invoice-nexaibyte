@@ -1,6 +1,7 @@
 export type Role='owner'|'admin'|'staff'
 export type Status='draft'|'sent'|'partially_paid'|'paid'|'overdue'|'void'
-export interface Business { id:number;name:string;email:string;phone:string;address:string;brand_color:string;currency:string;default_tax_percent:number;invoice_prefix:string;payment_instructions:string;logo_url?:string }
+export interface BankAccount {bank_name:string;account_name:string;account_number:string;routing_code:string;details:string;show_on_invoice:boolean;show_on_quotation:boolean}
+export interface Business { bank_accounts:BankAccount[]; id:number;name:string;email:string;phone:string;address:string;brand_color:string;currency:string;default_tax_percent:number;invoice_prefix:string;payment_instructions:string;logo_url?:string }
 export interface User { is_platform_admin:boolean; id:number;name:string;email:string;role:Role;business:Business }
 export interface Client { id:number;name:string;email:string;phone:string;company:string;address:string;notes:string }
 export interface Item { id?:number;description:string;unit?:string;quantity:number;unit_price_kobo:number;line_total_kobo?:number }
