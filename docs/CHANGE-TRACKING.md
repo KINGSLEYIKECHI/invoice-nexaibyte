@@ -41,6 +41,6 @@ git log -1 --oneline
 git status --short
 ```
 
-Do not push, deploy or create a release tag unless requested. Use the existing Git author identity. Commit messages and documentation must not contain real SMTP passwords, API tokens, APP_KEY, production database passwords or customer exports.
+The owner has authorized committing and pushing every completed, validated code update to the configured GitHub branch (2026-10-11). Do not ask again for routine pushes; report success or failure. Do not explicitly deploy to the server or create a release tag unless requested. Pushes may trigger configured CI/CD. Use the existing Git author identity. Commit messages and documentation must not contain real SMTP passwords, API tokens, APP_KEY, production database passwords or customer exports.
 
 See [the current change record](changes/2026-10-04-platform-administration.md) for a completed example and [ADMIN-UPDATE.md](ADMIN-UPDATE.md) for the Hostinger deployment/acceptance checklist.
