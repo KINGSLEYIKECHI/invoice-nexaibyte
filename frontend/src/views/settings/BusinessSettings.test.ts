@@ -15,3 +15,12 @@ it('offers global default currencies and manual bank account controls',async()=>
  await w.get('form').trigger('submit');await flushPromises()
  expect(api.mock.calls.at(-1)?.[1]).toMatchObject({currency:'USD',bank_accounts:[{account_number:'0012345678',show_on_invoice:true,show_on_quotation:true}]})
 })
+
+it('retains zero-prefixed counter input and previews the same six-digit document number',async()=>{
+ api.mockResolvedValue({name:'Business',currency:'NGN',bank_accounts:[],invoice_prefix:'INV',invoice_separator:'-',invoice_padding:4,quotation_prefix:'QUO',quotation_separator:'-',quotation_padding:4,next_invoice_number:1,next_quotation_number:1})
+ const w=mount(BusinessSettings,{global:{stubs:{RouterLink:true}}});await flushPromises()
+ await w.findAll('input[type="checkbox"]').find(i=>i.element.parentElement?.textContent?.includes('Set starting counters'))!.setValue(true)
+ const counter=w.findAll('input').find(i=>i.element.parentElement?.textContent?.startsWith('Invoice counter'))!;await counter.setValue('000132')
+ expect((counter.element as HTMLInputElement).value).toBe('000132');expect(w.text()).toContain('Next invoice: INV-000132')
+ await w.get('form').trigger('submit');await flushPromises();expect(api.mock.calls.at(-1)?.[1]).toMatchObject({next_invoice_number:132,invoice_padding:6})
+})

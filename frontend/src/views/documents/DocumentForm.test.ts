@@ -8,7 +8,7 @@ it('updates quotation totals immediately after price quantity tax and discount c
  const w=mount(DocumentForm,{global:{stubs:{RouterLink:true}}});await flushPromises()
  await w.get('input[aria-label="Unit price"]').setValue('100')
  await w.get('input[min=".01"]').setValue('2')
- expect(w.get('.grand-total').text()).toContain('200.00')
+ expect(w.text()).not.toContain('PO reference');expect(w.get('.grand-total').text()).toContain('200.00')
  const tax=w.findAll('input').find(i=>i.element.parentElement?.textContent?.startsWith('Tax (%)'))!;await tax.setValue('10')
  expect(w.get('.grand-total').text()).toContain('220.00')
  const discount=w.findAll('input').find(i=>i.element.parentElement?.textContent?.startsWith('Discount ('))!;await discount.setValue('20')

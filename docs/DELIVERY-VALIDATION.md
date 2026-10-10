@@ -50,3 +50,7 @@ The reported public logo URL returned HTTP 404. Added symlink-independent local 
 ## Numbering, PO and live totals — 2026-10-10
 
 61 backend tests / 377 assertions and 18 frontend tests, TypeScript and production build passed. Custom numbering, backward counters, optional bank fields, PO conversion and live quotation adjustments covered. Target Hostinger and GitHub execution remain pending. See NUMBERING-PO-UPDATE.md.
+
+## Invoice-only PO and leading-zero counters — 2026-10-11
+
+62 backend tests / 387 assertions and 20 frontend tests, TypeScript and production build passed. PO excluded from quotations and conversion; optional invoice PO preserved. Padded counter inputs infer display width and retain leading zeros with live previews. No production deployment performed.

@@ -2,6 +2,10 @@
 
 Each release records behavior, database effects, validation and deployment limitations. Detailed records live in `docs/changes/`. A Git commit records the exact source change; generated ZIPs are excluded from Git and can be reproduced using the documented packagers.
 
+## 2026-10-11 — Invoice-only PO and leading-zero numbers
+
+Removed PO from quotation forms/screens/PDFs and stopped copying it into converted invoices. Optional invoice PO remains. Starting counter inputs retain leading zeros, infer digit width and preview the actual next formatted number. No additional migration; legacy quotation PO data remains stored but hidden. Current guide: [NUMBER-FORMAT-UPDATE.md](docs/NUMBER-FORMAT-UPDATE.md).
+
 ## 2026-10-10 — Converted invoice payment details
 
 Converted invoices return business payment details immediately; invoice screen now displays invoice-enabled bank accounts and instructions, matching PDF visibility. No additional schema change. Current cumulative installation guide remains NUMBERING-PO-UPDATE.md. Targeted conversion regression, 19 frontend tests and production build verified locally.
