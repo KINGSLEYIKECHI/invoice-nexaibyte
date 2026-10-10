@@ -25,3 +25,10 @@ Validation: 17 frontend tests, TypeScript and production build passed. Headless 
 - `scripts/check-sidebar.cjs` — Bank account persistence, rendering, sidebar/logout fixes, regression checks or release documentation.
 - `scripts/package-settings-update.py` — Bank account persistence, rendering, sidebar/logout fixes, regression checks or release documentation.
 - `docs/changes/2026-10-10-settings-and-sign-out.md` — File-level release record and actual validation results.
+
+## Documentation follow-up: maintenance mode
+
+- `docs/SETTINGS-UPDATE.md`: explicit scoped down/up commands, cron pause/resume, health check and failed-update handling.
+- `docs/CHANGE-TRACKING.md` and `CONTRIBUTING.md`: require these steps directly in every future update guide and regenerated package documentation.
+- This record documents the clarification. Runtime behavior is unchanged; reviewed commands and Git whitespace checks only, no application suite rerun.
+- Regenerated settings update and source ZIPs so bundled instructions match.

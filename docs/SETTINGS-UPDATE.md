@@ -12,9 +12,15 @@ Desktop navigation scrolls independently; profile and a labelled Sign out button
 
 ## Hostinger upgrade
 
-Use the existing private backend `/home/u491120861/invoice-backend` and public frontend `/home/u491120861/domains/nexaibyte.com/public_html/invoice`. Follow COMMERCIAL-DOCUMENTS.md for backups, maintenance mode and scoped cache clearing. Preserve .env, APP_KEY, storage and the public backend gateway. The settings ZIPs are cumulative and include earlier commercial/admin migrations if pending.
+Use the existing private backend `/home/u491120861/invoice-backend` and public frontend `/home/u491120861/domains/nexaibyte.com/public_html/invoice`. Follow COMMERCIAL-DOCUMENTS.md for backups and scoped cache clearing. Preserve .env, APP_KEY, storage and the public backend gateway. The settings ZIPs are cumulative and include earlier commercial/admin migrations if pending.
 
-Extract invoice-settings-backend-update.zip into the private backend, then run:
+Before replacing files, back up this application's database and files, pause only its cron entries and allow its running worker to finish. Enter maintenance mode from SSH:
+
+```sh
+/opt/alt/php83/usr/bin/php /home/u491120861/invoice-backend/artisan down --no-ansi
+```
+
+This targets only invoice-backend; it does not stop PHP or your other sites. Extract invoice-settings-backend-update.zip into the private backend, then run:
 
 ```sh
 /opt/alt/php83/usr/bin/php /home/u491120861/invoice-backend/artisan migrate --force --no-ansi
@@ -22,6 +28,14 @@ Extract invoice-settings-backend-update.zip into the private backend, then run:
 ```
 
 Extract invoice-settings-frontend-update.zip into the invoice subdomain directory, preserving backend. Existing cron schedules and environment variables need no changes. The new migration adds nullable businesses.bank_accounts JSON only. It does not modify existing currency/phone values. Rolling this migration back deletes saved bank accounts; use a backup for a planned rollback.
+
+After both packages and migrations complete successfully, exit maintenance mode:
+
+```sh
+/opt/alt/php83/usr/bin/php /home/u491120861/invoice-backend/artisan up --no-ansi
+```
+
+Check https://invoice.nexaibyte.com/backend/up and the application in your browser, then resume only the invoice application's paused cron entries. If an update fails, keep maintenance mode enabled while diagnosing or restoring the known-good application; run `up` only when it is ready to serve users. Do not use `migrate:fresh` or blindly reverse migrations.
 
 If using managed CI releases, deploy through that mechanism instead of overwriting releases. Exact shared-host isolation checks and first production CI run are still pending; automatic deployment has not been enabled.
 

@@ -11,6 +11,18 @@ Every future functional update should include a dated entry in CHANGELOG.md and 
 5. Exact verification commands, results and dates; distinguish automated fakes, manual browser checks and real provider/production checks. Never mark an unexecuted check as passed.
 6. Remaining manual acceptance, limitations and future work. Include generated artifact names and reproducible packaging commands; do not version credentials or customer data.
 
+## Maintenance mode in every update guide
+
+Every update installation document must include explicit commands to enter maintenance mode before changing files/schema and exit it after successful installation. Do not rely on a link to another guide for these steps. For the original Hostinger installation use:
+
+```sh
+/opt/alt/php83/usr/bin/php /home/u491120861/invoice-backend/artisan down --no-ansi
+# Apply the documented update and verification steps.
+/opt/alt/php83/usr/bin/php /home/u491120861/invoice-backend/artisan up --no-ansi
+```
+
+State when to pause/resume this application's cron jobs, what to check after `up`, and what to do if installation fails. Use the verified current application's absolute Artisan path for managed layouts; never invent a release path or stop a shared PHP service. Preserve environment keys, uploads and unrelated sites. Ensure packaged copies of the guide are regenerated after documentation edits.
+
 ## Commit convention
 
 Use one coherent commit per completed change when practical. Suggested prefixes: `feat:`, `fix:`, `docs:`, `test:`, `chore:`. Keep the subject short and describe the resulting behavior. The body should explain scope, database/config effects, validation and outstanding live checks. Do not place its own future hash in the commit's files; use `git log` or tag a release separately when explicitly requested.
