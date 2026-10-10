@@ -2,6 +2,10 @@
 
 Each release records behavior, database effects, validation and deployment limitations. Detailed records live in `docs/changes/`. A Git commit records the exact source change; generated ZIPs are excluded from Git and can be reproduced using the documented packagers.
 
+## 2026-10-10 — Numbering, PO and totals
+
+Added continuation counters with prefix/separator/padding for invoices and quotations; backward counters rejected and existing numbers skipped. Added optional PO references and quotation conversion carry-through, optional bank fields, line-table subtotals and real-time quotation totals. Additive migration preserves old documents. See [current installation guide](docs/NUMBERING-PO-UPDATE.md). 61 backend tests/377 assertions and 18 frontend tests plus production build passed locally; not deployed.
+
 ## 2026-10-10 — Settings and sign-out fixes
 
 Fixed NGN-only settings selector, added manual bank accounts with invoice/quotation PDF visibility, and kept desktop sign-out reachable in short viewports. Added nullable business bank_accounts JSON; currency and phone remain independent. See [upgrade guide](docs/SETTINGS-UPDATE.md) and [change record](docs/changes/2026-10-10-settings-and-sign-out.md).

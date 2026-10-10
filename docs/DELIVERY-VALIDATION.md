@@ -46,3 +46,7 @@ The reported public logo URL returned HTTP 404. Added symlink-independent local 
 ## Settings and sign-out — 2026-10-10
 
 60 backend tests / 364 assertions, 17 frontend tests, TypeScript and production build passed. Headless Edge isolated sidebar CSS checks confirmed visible logout at 1366x600, 1024x768 and 800x600. Bank visibility, leading zeros, global currency and independent international phone persistence covered. Hosted deployment remains unverified.
+
+## Numbering, PO and live totals — 2026-10-10
+
+61 backend tests / 377 assertions and 18 frontend tests, TypeScript and production build passed. Custom numbering, backward counters, optional bank fields, PO conversion and live quotation adjustments covered. Target Hostinger and GitHub execution remain pending. See NUMBERING-PO-UPDATE.md.
