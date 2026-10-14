@@ -54,3 +54,7 @@ The reported public logo URL returned HTTP 404. Added symlink-independent local 
 ## Invoice-only PO and leading-zero counters — 2026-10-11
 
 62 backend tests / 387 assertions and 20 frontend tests, TypeScript and production build passed. PO excluded from quotations and conversion; optional invoice PO preserved. Padded counter inputs infer display width and retain leading zeros with live previews. No production deployment performed.
+
+## Editable quotations and light PDFs — 2026-10-14
+
+63 MySQL backend tests / 399 assertions, 20 frontend tests (single worker after startup timeouts), TypeScript and production build passed. Issued/accepted edits and post-conversion lock covered. Visually inspected short invoice/quotation plus every page of a four-page 45-line invoice. Shared light templates retain currency, bank visibility and invoice-only PO. Hostinger deployment remains unverified. See QUOTATION-PDF-UPDATE.md.

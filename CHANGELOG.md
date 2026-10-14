@@ -2,6 +2,10 @@
 
 Each release records behavior, database effects, validation and deployment limitations. Detailed records live in `docs/changes/`. A Git commit records the exact source change; generated ZIPs are excluded from Git and can be reproduced using the documented packagers.
 
+## 2026-10-14 — Editable quotations and light PDFs
+
+Issued and accepted quotations remain editable until converted, preserving current status; converted quotations are locked server-side. Redesigned invoice/quotation/delivery PDFs around the supplied sample with light print styling, shared templates, repeated item headings and page numbering. No new migration or dependency. Current installation guide: [QUOTATION-PDF-UPDATE.md](docs/QUOTATION-PDF-UPDATE.md).
+
 ## 2026-10-11 — Invoice-only PO and leading-zero numbers
 
 Removed PO from quotation forms/screens/PDFs and stopped copying it into converted invoices. Optional invoice PO remains. Starting counter inputs retain leading zeros, infer digit width and preview the actual next formatted number. No additional migration; legacy quotation PO data remains stored but hidden. Current guide: [NUMBER-FORMAT-UPDATE.md](docs/NUMBER-FORMAT-UPDATE.md).
