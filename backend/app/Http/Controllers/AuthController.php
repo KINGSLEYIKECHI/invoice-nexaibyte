@@ -10,7 +10,7 @@ class AuthController extends Controller {
     public function register(RegisterRequest $r) {
         return DB::transaction(function() use($r) {
             $b=Business::create(['name'=>$r->business_name,'slug'=>Str::slug($r->business_name).'-'.Str::lower(Str::random(8)),'email'=>$r->email]);
-            $u=User::create(['business_id'=>$b->id,'name'=>$r->name,'email'=>$r->email,'password'=>$r->password,'role'=>'owner']);
+            $u=User::create(['business_id'=>$b->id,'name'=>$r->name,'email'=>$r->email,'password'=>$r->password,'role'=>'owner','workspace_mode'=>'simple','enabled_modules'=>\App\Services\WorkspaceModules::SIMPLE]);
             $u->update(['last_login_at'=>now(),'last_seen_at'=>now()]);
             \App\Models\ActivityLog::record($u,'auth.register');
             return response()->json(['token'=>$u->createToken('web')->plainTextToken,'user'=>$u->load('business')],201);

@@ -12,6 +12,8 @@ test('compiled frontend and real production API work under /backend',async({page
  await expect(page.getByRole('link',{name:'Platform admin'})).toHaveCount(0)
  const token=await page.evaluate(()=>localStorage.getItem('invoice_token'))
  const headers={Authorization:`Bearer ${token}`}
+ expect((await request.put('/backend/api/workspace/preferences',{headers,data:{mode:'advanced',enabled_modules:['quotations','products','delivery_notes','team','statements','reports']}})).status()).toBe(200)
+ await page.reload()
  for(const path of ['/backend/api/platform/users','/backend/api/platform/integrations','/backend/api/platform/activity','/backend/api/platform/overview','/backend/api/platform/payment-emails'])expect((await request.get(path,{headers})).status()).toBe(403)
  expect((await request.put('/backend/api/platform/settings',{headers,data:{product_name:'Attacker'}})).status()).toBe(403)
  const clientRes=await request.post('/backend/api/clients',{headers,data:{name:'Test Client',email:'client@example.test',phone:'+2348031234567'}})

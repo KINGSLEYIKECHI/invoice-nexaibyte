@@ -54,3 +54,10 @@ Route::middleware(['auth:sanctum','tenant','activity'])->group(function(){
  Route::get('products',[$c,'index']);Route::get('products/{product}',[$c,'show'])->whereNumber('product');
  Route::middleware('role:owner,admin')->group(function()use($c){Route::post('products',[$c,'store']);Route::put('products/{product}',[$c,'update'])->whereNumber('product');Route::post('products/import',[$c,'import'])->middleware('throttle:10,1');});
 });
+
+Route::middleware(['auth:sanctum','tenant','activity'])->group(function(){
+ Route::get('workspace/preferences',[\App\Http\Controllers\WorkspacePreferencesController::class,'show']);
+ Route::put('workspace/preferences',[\App\Http\Controllers\WorkspacePreferencesController::class,'update']);
+});
+
+Route::get('reports/{kind}',[\App\Http\Controllers\BusinessReportController::class,'show'])->whereIn('kind',['statement','ageing'])->middleware(['auth:sanctum','tenant','activity','throttle:30,1']);

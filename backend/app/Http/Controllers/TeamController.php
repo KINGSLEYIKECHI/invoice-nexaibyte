@@ -6,7 +6,7 @@ class TeamController extends Controller {
     public function index(Request $r) { return $r->user()->business->users()->where('email','not like','%@disabled.invalid')->orderBy('name')->get(); }
     public function store(Request $r) {
         $data=$r->validate(['name'=>'required|string|max:100','email'=>'required|email|unique:users|max:255','password'=>'required|string|min:8','role'=>'required|in:admin,staff']);
-        return response()->json(User::create(array_merge($data,['business_id'=>$r->user()->business_id])),201);
+        return response()->json(User::create(array_merge($data,['business_id'=>$r->user()->business_id,'workspace_mode'=>'simple','enabled_modules'=>\App\Services\WorkspaceModules::SIMPLE])),201);
     }
     private function target(string $id): User { return User::where('business_id',auth()->user()->business_id)->findOrFail($id); }
     public function update(Request $r,string $user) {

@@ -58,3 +58,7 @@ The reported public logo URL returned HTTP 404. Added symlink-independent local 
 ## Editable quotations and light PDFs — 2026-10-14
 
 63 MySQL backend tests / 399 assertions, 20 frontend tests (single worker after startup timeouts), TypeScript and production build passed. Issued/accepted edits and post-conversion lock covered. Visually inspected short invoice/quotation plus every page of a four-page 45-line invoice. Shared light templates retain currency, bank visibility and invoice-only PO. Hostinger deployment remains unverified. See QUOTATION-PDF-UPDATE.md.
+
+## Workspace modules and operational reports — 2026-10-21
+
+Full MySQL regression: 72 tests / 453 assertions passed. Final focused report regression: 6 tests / 40 assertions (overlapping report cases, not extra independent full-suite tests). Frontend: 22 tests, TypeScript and production build passed. One headless Edge compiled-UI test with mocked APIs verified preset/custom selection, persistence, hidden routes, statement display, mobile width and visible logout; screenshots inspected. Real report APIs checked separately against isolated MySQL. Production-mirror E2E adapted for new Simple defaults, but GitHub/Linux and Hostinger execution remain pending. Future Paypod accounting/purchasing/signature/recurrence modules are explicitly unimplemented. See WORKSPACE-MODULES-UPDATE.md and PAYPOD-MODULE-REVIEW.md.

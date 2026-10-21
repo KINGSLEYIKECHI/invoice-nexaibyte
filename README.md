@@ -220,3 +220,7 @@ Use [the changelog](CHANGELOG.md) for release summaries, [the latest detailed ch
 ## Commercial documents update
 
 See [quotations, delivery notes, products, imports and currencies](docs/COMMERCIAL-DOCUMENTS.md) for usage, API amount compatibility, database changes and the isolated Hostinger upgrade.
+
+## Current update installation
+
+[Workspace modes and reporting modules — 2026-10-21](docs/WORKSPACE-MODULES-UPDATE.md) is the current cumulative update guide, including maintenance entry/exit and database effects. [Feature review and remaining scope](docs/PAYPOD-MODULE-REVIEW.md) distinguishes implemented modules from future Paypod-inspired workflows.

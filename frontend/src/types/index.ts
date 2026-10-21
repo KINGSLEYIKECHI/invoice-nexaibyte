@@ -2,7 +2,9 @@ export type Role='owner'|'admin'|'staff'
 export type Status='draft'|'sent'|'partially_paid'|'paid'|'overdue'|'void'
 export interface BankAccount {bank_name:string;account_name:string;account_number:string;routing_code:string;details:string;show_on_invoice:boolean;show_on_quotation:boolean}
 export interface Business { bank_accounts:BankAccount[];next_invoice_number?:number;next_quotation_number?:number;quotation_prefix?:string;invoice_separator?:string;quotation_separator?:string;invoice_padding?:number;quotation_padding?:number; id:number;name:string;email:string;phone:string;address:string;brand_color:string;currency:string;default_tax_percent:number;invoice_prefix:string;payment_instructions:string;logo_url?:string }
-export interface User { is_platform_admin:boolean; id:number;name:string;email:string;role:Role;business:Business }
+export type WorkspaceMode='simple'|'advanced'|'custom'
+export interface WorkspacePreferences {mode:WorkspaceMode;enabled_modules:string[];modules:{id:string;name:string;description:string;route:string}[];presets:{simple:string[];advanced:string[]}}
+export interface User { workspace_mode?:WorkspaceMode;enabled_modules?:string[]|null; is_platform_admin:boolean; id:number;name:string;email:string;role:Role;business:Business }
 export interface Client { id:number;name:string;email:string;phone:string;company:string;address:string;notes:string }
 export interface Item { id?:number;description:string;unit?:string;quantity:number;unit_price_kobo:number;line_total_kobo?:number }
 export interface Payment { id:number;amount_kobo:number;method:string;reference?:string;paid_on:string }

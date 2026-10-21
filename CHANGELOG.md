@@ -2,6 +2,10 @@
 
 Each release records behavior, database effects, validation and deployment limitations. Detailed records live in `docs/changes/`. A Git commit records the exact source change; generated ZIPs are excluded from Git and can be reproduced using the documented packagers.
 
+## 2026-10-21 — User-selected workspace modules and operational reports
+
+Added persistent per-user Simple/Advanced presets and Custom module selection with role-safe navigation; existing users retain Advanced, new registrations/team members start Simple. Added dated client statements and invoice ageing with separate currencies and CSV export. Hiding modules preserves all records and API permissions; no accounting/purchasing parity is claimed. Additive users preference migration; no new provider, dependency or cron. Current guide: [WORKSPACE-MODULES-UPDATE.md](docs/WORKSPACE-MODULES-UPDATE.md); [reviewed scope](docs/PAYPOD-MODULE-REVIEW.md).
+
 ## 2026-10-14 — Editable quotations and light PDFs
 
 Issued and accepted quotations remain editable until converted, preserving current status; converted quotations are locked server-side. Redesigned invoice/quotation/delivery PDFs around the supplied sample with light print styling, shared templates, repeated item headings and page numbering. No new migration or dependency. Current installation guide: [QUOTATION-PDF-UPDATE.md](docs/QUOTATION-PDF-UPDATE.md).
