@@ -1,0 +1,182 @@
+[
+  {
+    "id": "interview-evaluation",
+    "name": "Interview evaluation",
+    "group": "Recruitment",
+    "fields": [
+      "candidate_name",
+      "job_title",
+      "interview_date",
+      "interviewer"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nCandidate: {{candidate_name}}\nRole: {{job_title}}\nInterview date: {{interview_date}}\nInterviewer: {{interviewer}}\n\nAssess evidence against the role requirements below. Record observations before a hiring decision.\nRole knowledge and practical skills: ______________________________\nRelevant experience or learning examples: __________________________\nCommunication and collaboration evidence: __________________________\nProblem solving example: __________________________________________\nStrengths supported by examples: ___________________________________\nAreas requiring clarification: _____________________________________\nOverall recommendation and reasons: ________________________________\nNext step and responsible person: __________________________________\nInterviewer signature: __________________ Date: ____________________"
+  },
+  {
+    "id": "graduate-interview",
+    "name": "Fresh graduate interview questions",
+    "group": "Recruitment",
+    "fields": [
+      "candidate_name",
+      "job_title",
+      "interview_date",
+      "interviewer"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nCandidate: {{candidate_name}}\nRole: {{job_title}} | Date: {{interview_date}}\nInterviewer: {{interviewer}}\n\nUse these prompts consistently and record evidence relevant to the role.\n1. Which part of your education best prepared you for this work?\n2. Describe a project and your personal contribution.\n3. What did you learn during an internship or voluntary assignment?\n4. How would you approach an unfamiliar task?\n5. Give an example of working with others to solve a problem.\n6. How do you organise competing deadlines?\n7. Describe feedback you received and what you changed.\n8. What would you like to learn in your first three months?\n9. What do you understand about our customers and work?\n10. What questions do you have about the role?\n\nNotes and examples: _______________________________________________\nFollow up questions: ______________________________________________"
+  },
+  {
+    "id": "experienced-interview",
+    "name": "Experienced candidate interview questions",
+    "group": "Recruitment",
+    "fields": [
+      "candidate_name",
+      "job_title",
+      "interview_date",
+      "interviewer"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nCandidate: {{candidate_name}}\nRole: {{job_title}} | Date: {{interview_date}}\nInterviewer: {{interviewer}}\n\n1. Describe the responsibilities most relevant to this role.\n2. Which achievement best demonstrates your contribution?\n3. What was your personal role in that outcome?\n4. How did you measure success?\n5. Describe a difficult work problem and your approach.\n6. How did you prioritise when resources were limited?\n7. Give an example of improving a process.\n8. How do you check the quality of your work?\n9. Describe a disagreement you helped resolve.\n10. How do you communicate risks to others?\n11. Tell us about feedback that changed your approach.\n12. What did you learn from an unsuccessful project?\n13. How do you develop new skills?\n14. How do you support colleagues?\n15. How do you handle confidential information?\n16. What would your first month in this role involve?\n17. What support would you need to succeed?\n18. What interests you about our work?\n19. Which role requirements would you like clarified?\n20. What questions would you like to ask us?\n\nEvidence and follow up notes: _____________________________________"
+  },
+  {
+    "id": "guarantor",
+    "name": "Guarantor form",
+    "group": "Onboarding",
+    "fields": [
+      "employee_name",
+      "job_title",
+      "guarantor_name",
+      "guarantor_address",
+      "guarantor_phone"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nEmployee: {{employee_name}}\nRole: {{job_title}}\nGuarantor name: {{guarantor_name}}\nAddress: {{guarantor_address}}\nPhone: {{guarantor_phone}}\nRelationship to employee: _________________________________________\nHow long have you known the employee? _____________________________\nOccupation and organisation: ______________________________________\nContact email: ____________________________________________________\n\nStatement and agreed scope\nRecord the specific undertaking agreed with the guarantor here. No financial guarantee or liability is created by this blank form alone.\n__________________________________________________________________\n\nGuarantor signature: __________________ Date: ______________________\nCompany representative: _______________ Date: ______________________"
+  },
+  {
+    "id": "appointment-letter",
+    "name": "Letter of appointment",
+    "group": "Employment",
+    "fields": [
+      "employee_name",
+      "employee_address",
+      "job_title",
+      "start_date",
+      "salary",
+      "work_location",
+      "probation",
+      "notice_period"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nDate: {{document_date}}\nTo: {{employee_name}}\n{{employee_address}}\n\nWe confirm your appointment as {{job_title}}, starting {{start_date}} at {{work_location}}, subject to the terms agreed below.\nCompensation and payment frequency: {{salary}}\nProbation and review arrangements: {{probation}}\nWorking hours and reporting line: __________________________________\nLeave and benefits: ________________________________________________\nNotice arrangements: {{notice_period}}\nCompany policies applicable to this appointment: {{policies}}\n\nPlease review these terms and record any agreed changes before signing.\nFor {{company_name}}: {{signatory_name}}, {{signatory_title}}\nSignature: __________________________ Date: _______________________\nEmployee acceptance: _________________ Date: ______________________"
+  },
+  {
+    "id": "nda",
+    "name": "Non disclosure agreement",
+    "group": "Agreements",
+    "fields": [
+      "employee_name",
+      "employee_address",
+      "effective_date",
+      "purpose",
+      "duration",
+      "jurisdiction"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nParties: {{company_name}} and {{employee_name}}\nRecipient address: {{employee_address}}\nEffective date: {{effective_date}}\nPermitted purpose: {{purpose}}\n\nConfidential information\nDefine the information covered and any exclusions, including information already lawfully known, independently developed or publicly available.\n__________________________________________________________________\n\nHandling and permitted disclosure\nSpecify permitted use, safeguards, authorised recipients, required disclosures and how disclosures will be notified.\n__________________________________________________________________\n\nReturn and retention\nSpecify return or deletion arrangements and any lawful retention requirements.\n__________________________________________________________________\n\nDuration: {{duration}}\nGoverning law and dispute arrangements: {{jurisdiction}}\nAdditional agreed terms: ___________________________________________\n\nFor {{company_name}}: {{signatory_name}}\nSignature: __________________________ Date: _______________________\nOther party signature: _______________ Date: ______________________"
+  },
+  {
+    "id": "induction-checklist",
+    "name": "Staff induction checklist",
+    "group": "Onboarding",
+    "fields": [
+      "employee_name",
+      "job_title",
+      "start_date",
+      "supervisor"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nEmployee: {{employee_name}} | Role: {{job_title}}\nStart date: {{start_date}} | Supervisor: {{supervisor}}\nRecord completion date and responsible person beside each item.\n\n[ ] Explain the company purpose and services: {{company_definition}}\n[ ] Discuss company values: {{values}}\n[ ] Introduce team and reporting arrangements.\n[ ] Review role responsibilities and first month objectives.\n[ ] Explain working hours, leave and reporting absence.\n[ ] Provide approved tools and account access.\n[ ] Explain information security and confidentiality.\n[ ] Review health, safety and emergency procedures.\n[ ] Review applicable policies: {{policies}}\n[ ] Arrange training and follow up review.\n\nOutstanding actions and owners: ___________________________________\nEmployee acknowledgement: ____________ Date: ______________________\nSupervisor acknowledgement: __________ Date: ______________________"
+  },
+  {
+    "id": "termination-letter",
+    "name": "Employment termination letter",
+    "group": "Employment",
+    "fields": [
+      "employee_name",
+      "employee_address",
+      "job_title",
+      "effective_date",
+      "reason",
+      "notice_period",
+      "final_entitlements"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nDate: {{document_date}}\nTo: {{employee_name}}\n{{employee_address}}\nRole: {{job_title}}\n\nThis letter records the company's decision concerning your employment, effective {{effective_date}}.\nReason and relevant process followed: {{reason}}\nNotice or agreed payment arrangements: {{notice_period}}\nFinal entitlements and payment date: {{final_entitlements}}\nProperty return and access handover: _______________________________\nContinuing obligations already agreed: _____________________________\nContact for questions and any applicable review process: ___________\n\nFor {{company_name}}: {{signatory_name}}, {{signatory_title}}\nSignature: __________________________ Date: _______________________\nAcknowledgement of receipt: __________ Date: ______________________"
+  },
+  {
+    "id": "biodata",
+    "name": "Employee biodata form",
+    "group": "Onboarding",
+    "fields": [
+      "employee_name",
+      "job_title",
+      "employee_address",
+      "employee_phone",
+      "employee_email"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nEmployee name: {{employee_name}}\nRole: {{job_title}}\nContact address: {{employee_address}}\nPhone: {{employee_phone}}\nEmail: {{employee_email}}\nStart date: _______________________________________________________\n\nEmergency contact name: ___________________________________________\nRelationship: _____________________________________________________\nEmergency contact telephone: ______________________________________\nRelevant qualifications and experience: ____________________________\nTraining or support requirements voluntarily provided: _____________\n\nCollect only information needed for employment administration. Explain access and retention arrangements before collecting additional personal data.\nI confirm that the information provided is accurate to my knowledge.\nEmployee signature: __________________ Date: ______________________\nReceived by: _________________________ Date: ______________________"
+  },
+  {
+    "id": "welcome-pack",
+    "name": "Employee welcome pack checklist",
+    "group": "Onboarding",
+    "fields": [
+      "employee_name",
+      "job_title",
+      "start_date",
+      "supervisor"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nWelcome {{employee_name}}\nRole: {{job_title}} | Start date: {{start_date}}\nYour contact: {{supervisor}}\nAbout our business: {{company_definition}}\nOur values: {{values}}\n\nRecord delivery or completion beside each item.\n[ ] Appointment terms and job description\n[ ] Employee contact and emergency information\n[ ] Staff handbook and applicable policies\n[ ] Work schedule and first day arrangements\n[ ] Equipment and approved account access\n[ ] Team contacts and reporting arrangements\n[ ] Safety and emergency information\n[ ] Training schedule and initial review date\n[ ] Pay administration instructions\n\nAdditional items: _________________________________________________\nEmployee acknowledgement: ____________ Date: ______________________\nPrepared by: _________________________ Date: ______________________"
+  },
+  {
+    "id": "job-description",
+    "name": "Job description",
+    "group": "Recruitment",
+    "fields": [
+      "job_title",
+      "department",
+      "supervisor",
+      "work_location",
+      "responsibilities",
+      "qualifications"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nRole: {{job_title}}\nDepartment: {{department}}\nReports to: {{supervisor}}\nLocation: {{work_location}}\nAbout the business: {{company_definition}}\n\nRole purpose\nDescribe the result this role is expected to deliver.\n__________________________________________________________________\n\nResponsibilities\n{{responsibilities}}\n\nRequired knowledge and qualifications\n{{qualifications}}\n\nSuccess measures and review arrangements\n__________________________________________________________________\nWorking relationships and resources\n__________________________________________________________________\nPrepared by: {{signatory_name}} | Date: {{document_date}}\nEmployee acknowledgement: ____________ Date: ______________________"
+  },
+  {
+    "id": "offer-letter",
+    "name": "Job offer letter",
+    "group": "Employment",
+    "fields": [
+      "employee_name",
+      "employee_address",
+      "job_title",
+      "start_date",
+      "salary",
+      "work_location",
+      "response_date"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nDate: {{document_date}}\nTo: {{employee_name}}\n{{employee_address}}\n\nWe are pleased to offer you the position of {{job_title}} with {{company_name}}.\nProposed start date: {{start_date}}\nWork location: {{work_location}}\nCompensation and frequency: {{salary}}\nWorking hours and benefits: ________________________________________\nConditions of this offer, if any: __________________________________\nPlease respond by {{response_date}}. The appointment terms should be reviewed and agreed before employment begins.\n\nFor {{company_name}}: {{signatory_name}}, {{signatory_title}}\nSignature: __________________________ Date: _______________________\nCandidate response: _______________________________________________\nSignature: __________________________ Date: _______________________"
+  },
+  {
+    "id": "non-compete",
+    "name": "Non compete agreement",
+    "group": "Agreements",
+    "fields": [
+      "employee_name",
+      "effective_date",
+      "purpose",
+      "duration",
+      "jurisdiction"
+    ],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nParties: {{company_name}} and {{employee_name}}\nEffective date: {{effective_date}}\nBusiness interest to be protected: {{purpose}}\n\nProposed scope for review\nRestricted activities: _____________________________________________\nGeographical area, if applicable: __________________________________\nDuration and starting event: {{duration}}\nExceptions and permitted activities: _______________________________\nConsideration or other agreed arrangements: ________________________\nGoverning law and dispute arrangements: {{jurisdiction}}\n\nThe parties must review and agree the specific scope before signing. This worksheet does not determine whether a restriction is enforceable.\n\nFor {{company_name}}: {{signatory_name}}\nSignature: __________________________ Date: _______________________\nOther party signature: _______________ Date: ______________________"
+  },
+  {
+    "id": "salary-structure",
+    "name": "Salary structure",
+    "group": "Salary planning",
+    "fields": [],
+    "body": "Company: {{company_name}}\n{{company_address}}\n{{company_email}} | {{company_phone}}\nRegistration: {{registration_number}}\n\nSalary planning schedule\nAmounts are per employee for one pay period. The selected increase is a planning assumption, not an automatic entitlement. Totals sum one salary for each listed role; this is not a headcount payroll calculation."
+  }
+]

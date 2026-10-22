@@ -61,3 +61,13 @@ Route::middleware(['auth:sanctum','tenant','activity'])->group(function(){
 });
 
 Route::get('reports/{kind}',[\App\Http\Controllers\BusinessReportController::class,'show'])->whereIn('kind',['statement','ageing'])->middleware(['auth:sanctum','tenant','activity','throttle:30,1']);
+
+Route::middleware(['auth:sanctum','tenant','activity','role:owner,admin',\App\Http\Middleware\PrivateBusinessDocuments::class])->prefix('business-documents')->group(function(){
+ $c=\App\Http\Controllers\BusinessDocumentController::class;
+ Route::get('setup',[$c,'setup']);Route::put('profile',[$c,'profile']);
+ Route::get('/',[$c,'index']);Route::post('/',[$c,'store']);
+ Route::get('{businessDocument}',[$c,'show'])->whereNumber('businessDocument');
+ Route::put('{businessDocument}',[$c,'update'])->whereNumber('businessDocument');
+ Route::delete('{businessDocument}',[$c,'destroy'])->whereNumber('businessDocument');
+ Route::get('{businessDocument}/download/{format}',[$c,'download'])->whereNumber('businessDocument')->whereIn('format',['pdf','docx','xlsx'])->middleware('throttle:20,1');
+});

@@ -2,6 +2,13 @@
 
 Each release records behavior, database effects, validation and deployment limitations. Detailed records live in `docs/changes/`. A Git commit records the exact source change; generated ZIPs are excluded from Git and can be reproduced using the documented packagers.
 
+## 2026-10-22 Business documents
+
+- Added an owner/admin business-document workspace with fourteen original company-personalised templates, encrypted private drafts, Word/PDF exports and Excel salary planning.
+- Added a separate company definition profile, tenant/role restrictions, input bounds and live salary totals.
+- Added an additive migration, export/security/browser coverage and scoped Hostinger maintenance/update documentation.
+- See [file-level change record](docs/changes/2026-10-22-business-documents.md) and [current update guide](docs/BUSINESS-DOCUMENTS-UPDATE.md).
+
 ## 2026-10-21 — User-selected workspace modules and operational reports
 
 Added persistent per-user Simple/Advanced presets and Custom module selection with role-safe navigation; existing users retain Advanced, new registrations/team members start Simple. Added dated client statements and invoice ageing with separate currencies and CSV export. Hiding modules preserves all records and API permissions; no accounting/purchasing parity is claimed. Additive users preference migration; no new provider, dependency or cron. Current guide: [WORKSPACE-MODULES-UPDATE.md](docs/WORKSPACE-MODULES-UPDATE.md); [reviewed scope](docs/PAYPOD-MODULE-REVIEW.md).

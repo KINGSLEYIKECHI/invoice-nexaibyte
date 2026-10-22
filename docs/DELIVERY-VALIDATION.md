@@ -62,3 +62,8 @@ The reported public logo URL returned HTTP 404. Added symlink-independent local 
 ## Workspace modules and operational reports — 2026-10-21
 
 Full MySQL regression: 72 tests / 453 assertions passed. Final focused report regression: 6 tests / 40 assertions (overlapping report cases, not extra independent full-suite tests). Frontend: 22 tests, TypeScript and production build passed. One headless Edge compiled-UI test with mocked APIs verified preset/custom selection, persistence, hidden routes, statement display, mobile width and visible logout; screenshots inspected. Real report APIs checked separately against isolated MySQL. Production-mirror E2E adapted for new Simple defaults, but GitHub/Linux and Hostinger execution remain pending. Future Paypod accounting/purchasing/signature/recurrence modules are explicitly unimplemented. See WORKSPACE-MODULES-UPDATE.md and PAYPOD-MODULE-REVIEW.md.
+
+
+## 22 October 2026 business documents
+
+Full local MySQL/PHP suite: 80 tests / 632 assertions; final focused document checks: 6 / 166. Frontend: 23 tests; TypeScript/production build passed. Compiled mocked-API Playwright: 2 tests passed, including 390px layout/sign-out and live salary totals. Synthetic Word/PDF/XLSX exports and spreadsheet recalculation checked. See [business document change record](changes/2026-10-22-business-documents.md) for precise commands, visual/export evidence and remaining live acceptance. No Hostinger deployment or Linux GitHub run is claimed.

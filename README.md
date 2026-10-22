@@ -2,6 +2,10 @@
 
 A working multi-tenant invoicing application for Nigerian businesses. Create a workspace, manage clients and team access, prepare branded invoices, deliver PDFs, and record payments.
 
+## Latest update
+
+For the business documents release, use [Business documents update](docs/BUSINESS-DOCUMENTS-UPDATE.md). This is the current cumulative manual Hostinger update guide.
+
 The original supplied specification is preserved in SPEC.md. This README was created before scaffolding and completed after implementation.
 
 ## Stack

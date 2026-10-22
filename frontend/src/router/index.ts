@@ -8,6 +8,7 @@ const router=createRouter({history:createWebHistory(),routes:[
  {path:'/login',component:()=>import('../views/auth/Login.vue'),meta:{guest:true}},
  {path:'/register',component:()=>import('../views/auth/Register.vue'),meta:{guest:true}},
  {path:'/',component:()=>import('../views/Dashboard.vue')},
+ {path:'/business-documents',component:()=>import('../views/business-documents/BusinessDocuments.vue'),meta:{manager:true,workspaceModule:'business_documents'}},
  {path:'/modules',component:()=>import('../views/settings/WorkspaceModules.vue')},
  {path:'/statements',component:()=>import('../views/reports/BusinessReports.vue'),meta:{workspaceModule:'statements',reportKind:'statement'}},
  {path:'/reports/ageing',component:()=>import('../views/reports/BusinessReports.vue'),meta:{workspaceModule:'reports',reportKind:'ageing'}},
